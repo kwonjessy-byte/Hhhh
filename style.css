@@ -1,13 +1,40 @@
 :root {
-  --bg: #faf7f2;
-  --card: #ffffff;
-  --ink: #2b2621;
-  --muted: #8a7f74;
-  --accent: #e08a63;
+  --bg: #f1ece3;
+  --card: #fbf8f3;
+  --ink: #26201b;
+  --muted: #8d8275;
+  --border: #e1d8c9;
+  --accent: #2f6b63;
+  --accent-soft: #e4ede9;
   --accent-ink: #ffffff;
-  --border: #ece4da;
-  --danger: #c0574a;
-  --radius: 16px;
+  --danger: #a24638;
+  --radius: 18px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171412;
+    --card: #211d1a;
+    --ink: #ede7df;
+    --muted: #9c9186;
+    --border: #34302b;
+    --accent: #4fa79c;
+    --accent-soft: #1c2d2a;
+    --accent-ink: #0b1f1d;
+    --danger: #c97463;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #171412;
+  --card: #211d1a;
+  --ink: #ede7df;
+  --muted: #9c9186;
+  --border: #34302b;
+  --accent: #4fa79c;
+  --accent-soft: #1c2d2a;
+  --accent-ink: #0b1f1d;
+  --danger: #c97463;
 }
 
 * { box-sizing: border-box; }
@@ -17,14 +44,17 @@ html, body {
   padding: 0;
   background: var(--bg);
   color: var(--ink);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  font-family: "Gowun Dodum", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
 .app {
   max-width: 480px;
   margin: 0 auto;
-  padding: 20px 16px calc(32px + env(safe-area-inset-bottom));
+  padding: 28px 18px calc(32px + env(safe-area-inset-bottom));
   min-height: 100vh;
 }
 
@@ -32,27 +62,33 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .topbar h1 {
-  font-size: 18px;
+  font-family: "Gowun Batang", "Nanum Myeongjo", serif;
+  font-size: 21px;
   font-weight: 700;
+  letter-spacing: 0.02em;
   margin: 0;
+  text-wrap: balance;
 }
 
 .nav-btn {
-  width: 40px;
-  height: 40px;
+  flex: none;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid var(--border);
   background: var(--card);
   color: var(--ink);
-  font-size: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  font-size: 19px;
+  line-height: 1;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
-.nav-btn:active { background: var(--border); }
+.nav-btn:active { background: var(--accent-soft); }
 
 .weekday-row {
   display: grid;
@@ -61,27 +97,32 @@ html, body {
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
-  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 6px;
+  gap: 7px;
+  padding: 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
 }
 
 .day-cell {
   position: relative;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  background: var(--card);
-  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
-  padding: 6px;
+  padding: 5px;
   overflow: hidden;
   cursor: pointer;
+  font-variant-numeric: tabular-nums;
 }
 
 .day-cell.empty {
@@ -90,23 +131,22 @@ html, body {
 }
 
 .day-cell.today {
-  border-color: var(--accent);
-  border-width: 2px;
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
 }
 
 .day-cell .date-num {
   font-size: 12px;
   font-weight: 600;
-  color: var(--ink);
+  color: var(--muted);
   z-index: 1;
-  background: rgba(255,255,255,0.75);
-  border-radius: 6px;
-  padding: 1px 4px;
 }
 
 .day-cell.has-photo .date-num {
   color: #fff;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 5px;
+  padding: 0 4px;
 }
 
 .day-cell .thumb {
@@ -121,14 +161,14 @@ html, body {
   text-align: center;
   color: var(--muted);
   font-size: 13px;
-  margin-top: 18px;
+  margin-top: 20px;
 }
 
 /* Modal */
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(20, 16, 12, 0.45);
+  background: rgba(15, 12, 10, 0.5);
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -141,13 +181,17 @@ html, body {
   width: 100%;
   max-width: 480px;
   background: var(--bg);
-  border-radius: 20px 20px 0 0;
-  padding: 16px 16px calc(20px + env(safe-area-inset-bottom));
-  animation: slideUp 0.2s ease-out;
+  border-radius: 22px 22px 0 0;
+  padding: 18px 18px calc(22px + env(safe-area-inset-bottom));
+  animation: slideUp 0.22s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-card { animation: none; }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(24px); opacity: 0; }
+  from { transform: translateY(28px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
 
@@ -155,11 +199,12 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .modal-header h2 {
-  font-size: 17px;
+  font-family: "Gowun Batang", "Nanum Myeongjo", serif;
+  font-size: 19px;
   margin: 0;
 }
 
@@ -167,9 +212,9 @@ html, body {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: none;
+  border: 1px solid var(--border);
   background: var(--card);
-  font-size: 16px;
+  font-size: 15px;
   color: var(--muted);
 }
 
@@ -211,6 +256,7 @@ html, body {
   color: var(--accent-ink);
   font-size: 15px;
   font-weight: 700;
+  font-family: inherit;
 }
 
 .primary-btn:active { opacity: 0.85; }
@@ -223,4 +269,11 @@ html, body {
   color: var(--danger);
   font-size: 14px;
   font-weight: 600;
+  font-family: inherit;
+}
+
+button:focus-visible,
+.day-cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

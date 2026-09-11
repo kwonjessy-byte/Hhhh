@@ -66,6 +66,9 @@ function renderCalendar() {
     const key = dateKey(state.year, state.month, day);
     const cell = document.createElement("div");
     cell.className = "day-cell";
+    cell.tabIndex = 0;
+    cell.setAttribute("role", "button");
+    cell.setAttribute("aria-label", `${key} 사진 보기`);
     if (key === today) cell.classList.add("today");
 
     const num = document.createElement("span");
@@ -83,6 +86,12 @@ function renderCalendar() {
     }
 
     cell.addEventListener("click", () => openDay(key));
+    cell.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openDay(key);
+      }
+    });
     el.grid.appendChild(cell);
   }
 }
