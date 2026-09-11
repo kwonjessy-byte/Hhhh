@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+<title>포토 다이어리</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <button id="prevMonth" class="nav-btn" aria-label="이전 달">‹</button>
+      <h1 id="monthLabel">2026년 1월</h1>
+      <button id="nextMonth" class="nav-btn" aria-label="다음 달">›</button>
+    </header>
+
+    <div class="weekday-row">
+      <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+    </div>
+
+    <div id="calendarGrid" class="calendar-grid"></div>
+
+    <p class="hint">날짜를 눌러 그날의 사진을 찍거나 확인하세요.</p>
+  </div>
+
+  <!-- 촬영/보기 모달 -->
+  <div id="dayModal" class="modal hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="modalDateLabel">9월 11일</h2>
+        <button id="closeModal" class="icon-btn" aria-label="닫기">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <div id="photoPreview" class="photo-preview empty">
+          <span id="photoPlaceholder">아직 사진이 없어요</span>
+          <img id="photoImg" alt="선택한 날짜의 사진" hidden />
+        </div>
+
+        <input id="cameraInput" type="file" accept="image/*" capture="environment" hidden />
+
+        <div class="modal-actions">
+          <button id="takePhotoBtn" class="primary-btn">사진 촬영 / 변경</button>
+          <button id="deletePhotoBtn" class="danger-btn" hidden>사진 삭제</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
