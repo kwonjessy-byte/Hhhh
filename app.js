@@ -20,7 +20,6 @@ const el = {
   photoPlaceholder: document.getElementById("photoPlaceholder"),
   photoImg: document.getElementById("photoImg"),
   cameraInput: document.getElementById("cameraInput"),
-  takePhotoBtn: document.getElementById("takePhotoBtn"),
   deletePhotoBtn: document.getElementById("deletePhotoBtn"),
 };
 
@@ -203,7 +202,6 @@ el.modal.addEventListener("click", (e) => {
   if (e.target === el.modal) closeDay();
 });
 
-el.takePhotoBtn.addEventListener("click", () => el.cameraInput.click());
 el.cameraInput.addEventListener("change", handlePhotoSelected);
 el.deletePhotoBtn.addEventListener("click", deleteCurrentPhoto);
 
